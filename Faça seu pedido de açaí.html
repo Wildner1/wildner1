@@ -1,4 +1,3 @@
-Faça seu pedido de açaí
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,7 +7,7 @@ Faça seu pedido de açaí
 <style>
   body {
     font-family: 'Arial', sans-serif;
-    background: url('caminho-para-sua-imagem-de-fundo.jpg') no-repeat center center fixed;
+    background: url('blob:https://web.whatsapp.com/768d4523-a7df-4e9c-9ab9-8c2144cc03b8') no-repeat center center fixed;
     background-size: cover;
     margin: 0;
     padding: 0;
@@ -19,15 +18,18 @@ Faça seu pedido de açaí
     color: #FFF;
   }
   .container {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     padding: 20px;
     border-radius: 8px;
-    width: 300px;
+    width: 340px;
   }
-  select, button {
+  .form-item {
+    margin-bottom: 15px;
+  }
+  select, input, button {
     width: 100%;
     padding: 10px;
-    margin-top: 10px;
+    margin-top: 5px;
   }
   h1 {
     text-align: center;
@@ -38,9 +40,16 @@ Faça seu pedido de açaí
     color: white;
     border: none;
     cursor: pointer;
+    margin-top: 20px;
   }
   button:hover {
     opacity: 0.8;
+  }
+  .item-image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-top: 10px;
   }
 </style>
 </head>
@@ -49,32 +58,21 @@ Faça seu pedido de açaí
 <div class="container">
   <h1>Bem Vindo à Loja do Geração Eleita</h1>
   <form id="pedidoForm">
-    <label for="acai">Escolha o seu Açaí:</label>
-    <select id="acai" name="acai">
-      <option value="Açaí 300ml">300ml - R$6,00</option>
-      <option value="Açaí 500ml">500ml - R$10,00</option>
-    </select>
-    
-    <label for="adicionais">Adicionais:</label>
-    <select id="adicionais" name="adicionais">
-      <option value="Leite em Pó">Leite em Pó</option>
-      <option value="Leite Condensado">Leite Condensado</option>
-      <option value="Paçoca">Paçoca</option>
-      <option value="Granola">Granola</option>
-      <option value="Amendoim">Amendoim</option>
-    </select>
+    <div class="form-item">
+      <label for="nome">Seu Nome:</label>
+      <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+    </div>
 
-    <label for="coberturas">Coberturas:</label>
-    <select id="coberturas" name="coberturas">
-      <option value="Chocolate">Chocolate</option>
-      <option value="Morango">Morango</option>
-    </select>
+    <div class="form-item">
+      <label for="acai">Escolha o seu Açaí:</label>
+      <img src="caminho-para-imagem-acai.jpg" alt="Açaí" class="item-image">
+      <select id="acai" name="acai">
+        <option value="Açaí 300ml">300ml - R$6,00</option>
+        <option value="Açaí 500ml">500ml - R$10,00</option>
+      </select>
+    </div>
 
-    <label for="frutas">Frutas:</label>
-    <select id="frutas" name="frutas">
-      <option value="Banana">Banana</option>
-      <option value="Morango">Morango</option>
-    </select>
+    <!-- Repetir a estrutura abaixo para adicionais, coberturas e frutas -->
 
     <button type="button" onclick="enviarPedido()">Faça seu pedido</button>
   </form>
@@ -82,12 +80,12 @@ Faça seu pedido de açaí
 
 <script>
 function enviarPedido() {
+  var nome = document.getElementById('nome').value;
   var acai = document.getElementById('acai').value;
-  var adicionais = document.getElementById('adicionais').value;
-  var coberturas = document.getElementById('coberturas').value;
-  var frutas = document.getElementById('frutas').value;
+  // Adicione as variáveis para adicionais, coberturas e frutas aqui
 
-  var mensagem = `Olá, gostaria de pedir o seguinte: Açaí: ${acai}, Adicionais: ${adicionais}, Coberturas: ${coberturas}, Frutas: ${frutas}.`;
+  var mensagem = `Nome: ${nome}, Pedido: Açaí: ${acai}`;
+  // Adicione os itens adicionais, coberturas e frutas à mensagem aqui
 
   var numeroWhatsApp = "27997904763";
   window.open(`https://wa.me/55${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`, '_blank');
