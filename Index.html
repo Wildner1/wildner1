@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja do Geração Eleita</title>
+    <style>
+        /* Estilos CSS aqui */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo à Loja do Geração Eleita</h1>
+    </header>
+    <main>
+        <section id="order-form">
+            <h2>Faça seu pedido de açaí</h2>
+            <form id="acai-form">
+                <label for="name">Seu nome:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="size">Tamanho do açaí:</label>
+                <select id="size" name="size" required>
+                    <option value="300ml">300 ml - R$ 6,00</option>
+                    <option value="500ml">500 ml - R$ 10,00</option>
+                </select>
+                <fieldset>
+                    <legend>Adicionais:</legend>
+                    <input type="checkbox" id="leite-pó" name="additionals" value="leite-pó">
+                    <label for="leite-pó">Leite em pó</label>
+                    <input type="checkbox" id="leite-condensado" name="additionals" value="leite-condensado">
+                    <label for="leite-condensado">Leite condensado</label>
+                    <input type="checkbox" id="paçoca" name="additionals" value="paçoca">
+                    <label for="paçoca">Paçoca</label>
+                    <input type="checkbox" id="granola" name="additionals" value="granola">
+                    <label for="granola">Granola</label>
+                    <input type="checkbox" id="amendoim" name="additionals" value="amendoim">
+                    <label for="amendoim">Amendoim</label>
+                </fieldset>
+                <fieldset>
+                    <legend>Coberturas:</legend>
+                    <input type="checkbox" id="chocolate" name="toppings" value="chocolate">
+                    <label for="chocolate">Cobertura de chocolate</label>
+                    <input type="checkbox" id="morango" name="toppings" value="morango">
+                    <label for="morango">Cobertura de morango</label>
+                </fieldset>
+                <fieldset>
+                    <legend>Frutas:</legend>
+                    <input type="checkbox" id="banana" name="fruits" value="banana">
+                    <label for="banana">Banana</label>
+                    <input type="checkbox" id="morango-fruta" name="fruits" value="morango">
+                    <label for="morango-fruta">Morango</label>
+                </fieldset>
+                <button type="button" id="add-to-cart-button">Adicionar ao carrinho</button>
+                <button type="submit" id="submit-button" style="display: none;">Enviar pedido</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>Entre em contato pelo WhatsApp: <a href="https://wa.me/+5527997094763">Tirar dúvidas com Wildner</a></p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("acai-form");
+            const addToCartButton = document.getElementById("add-to-cart-button");
+            const submitButton = document.getElementById("submit-button");
+
+            let cartItems = [];
+
+            addToCartButton.addEventListener("click", function() {
+                // Coletar os dados do formulário
+                const formData = new FormData(form);
+                const name = formData.get("name");
+                const size = formData.get("size");
+                const additionals = formData.getAll("additionals");
+                const toppings = formData.getAll("toppings");
+                const fruits = formData.getAll("fruits");
+
+                // Construir o item do carrinho
+                const item = {
+                    name: name,
+                    size: size,
+                    additionals: additionals,
+                    toppings: toppings,
+                    fruits: fruits
+                };
+
+                // Adicionar item ao carrinho
+                cartItems.push(item);
+                alert("Item adicionado ao carrinho!");
+
+                // Limpar o formulário
+                form.reset();
+            });
+
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                // Construir a mensagem do pedido
+                let message = "Pedido de Açaí:\n";
+
+                cartItems.forEach(function(item, index) {
+                    message += `Item ${index + 1}:\n`;
+                    message += `Nome: ${item.name}\n`;
+                    message += `Tamanho: ${item.size}\n`;
+
+                    if (item.additionals.length > 0) {
+                        message += `Adicionais: ${item.additionals.join(", ")}\n`;
+                    }
+
+                    if (item.toppings.length > 0) {
+                        message += `Coberturas: ${item.toppings.join(", ")}\n`;
+                    }
+
+                    if (item.fruits.length > 0) {
+                        message += `Frutas: ${item.fruits.join(", ")}\n`;
+                    }
+
+                    message += "\n";
+                });
+
+                // Enviar mensagem para o WhatsApp
+                const whatsappNumber = "+5527997094763"; // Substitua pelo número de WhatsApp correto
+                const whatsappMessage = encodeURIComponent(message);
+                const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+                window.location.href = whatsappLink;
+            });
+        });
+    </script>
+</body>
+</html>
